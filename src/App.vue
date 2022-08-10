@@ -25,6 +25,7 @@ export default {
         this.$bus.$on("deleteTodo", this.deleteTodo)
         this.$bus.$on("checkAllTodo", this.checkAllTodo)
         this.$bus.$on("clearAllTodo", this.clearAllTodo)
+        this.$bus.$on("editTodo", this.editTodo)
     },
     beforeDestroy() {
         this.$bus.$off(["checkTodo", "deleteTodo", "checkAllTodo"])
@@ -62,6 +63,13 @@ export default {
         clearAllTodo() {
             this.todos = this.todos.filter((todo) => {
                 return !todo.done
+            })
+        },
+        editTodo(nid, newValue) {
+            this.todos.forEach(value => {
+                if (value.id === nid) {
+                    value.title = newValue
+                }
             })
         }
     },

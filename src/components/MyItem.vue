@@ -30,6 +30,8 @@ export default {
         handDelete(nid) {
             if (confirm('确定删除吗?')) {
                 this.$bus.$emit("deleteTodo", nid)
+            } else {
+                alert("取消成功")
             }
         },
         handleEdit(todoObj) {
@@ -43,7 +45,12 @@ export default {
             })
         },
         handleBlur(todoObj) {
-            todoObj.isEdit = false
+            if (this.$refs.inputTitle.value !== "") {
+                this.$bus.$emit("editTodo", todoObj.id, this.$refs.inputTitle.value)
+                todoObj.isEdit = false
+            } else {
+                alert("输入不能为空")
+            }
         }
     }
 }
