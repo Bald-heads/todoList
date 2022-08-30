@@ -25,9 +25,10 @@ export default {
         this.$bus.$on("deleteTodo", this.deleteTodo)
         this.$bus.$on("checkAllTodo", this.checkAllTodo)
         this.$bus.$on("clearAllTodo", this.clearAllTodo)
+        this.$bus.$on("editTodo", this.editTodo)
     },
     beforeDestroy() {
-        this.$bus.$off(["checkTodo", "deleteTodo", "checkAllTodo"])
+        this.$bus.$off(["checkTodo", "deleteTodo", "checkAllTodo", "editTodo"])
         pubSub.unsubscribe(this.pubId)
     },
     components: {
@@ -62,6 +63,13 @@ export default {
         clearAllTodo() {
             this.todos = this.todos.filter((todo) => {
                 return !todo.done
+            })
+        },
+        editTodo(nid, newValue) {
+            this.todos.forEach((todos) => {
+                if (todos.id === nid) {
+                    todos.title = newValue
+                }
             })
         }
     },

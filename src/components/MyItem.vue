@@ -7,12 +7,12 @@
                 <input :value="todoObj.title"
                        v-show="todoObj.isEdit"
                        type="text"
-                       @blur="handleBlur(todoObj)"
+                       @blur="handleBlur(todoObj,$event)"
                        ref="inputTitle"
                 />
             </label>
             <button class="btn btn-danger" @click="handDelete(todoObj.id)">删除</button>
-            <button class="btn btn-demo" @click="handleEdit(todoObj)">编辑</button>
+            <button class="btn btn-demo" @click="handleEdit(todoObj,$event)">编辑</button>
         </li>
     </div>
 </template>
@@ -24,7 +24,6 @@ export default {
     props: ['todoObj'],
     methods: {
         handCheck(nid) {
-            //通知app组件done值取反
             this.$bus.$emit("checkTodo", nid)
         },
         handDelete(nid) {
@@ -42,8 +41,9 @@ export default {
                 this.$refs.inputTitle.focus()
             })
         },
-        handleBlur(todoObj) {
+        handleBlur(todoObj, event) {
             todoObj.isEdit = false
+            this.$bus.$emit("editTodo", todoObj.id, event.target.value)
         }
     }
 }
